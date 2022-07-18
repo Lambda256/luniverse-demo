@@ -13,7 +13,7 @@ import {
 	OpenMenu,
 } from "./styled";
 
-import LogoIMG from "/src/images/luniverse_symbol.png";
+import LogoIMG from "/assets/images/luniverse_symbol.png";
 
 const Navbar = () => {
 	return (

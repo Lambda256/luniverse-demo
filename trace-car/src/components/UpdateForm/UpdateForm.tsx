@@ -131,7 +131,7 @@ const UpdateForm = () => {
 			<FormWrap>
 				<Title>Add more informations</Title>
 				<ImgWrap>
-					<IMG src={`/src/images/vehicle${selectedItem.image}.png`} />
+					<IMG src={`/assets/images/vehicle${selectedItem.image}.png`} />
 				</ImgWrap>
 				<Form id="input-form" onKeyDown={handleOnEnter}>
 					<InputBox>

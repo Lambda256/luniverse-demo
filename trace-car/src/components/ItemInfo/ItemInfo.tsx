@@ -33,7 +33,7 @@ const ItemInfo = () => {
 			<InfoWrap>
 				<Title> Item Info </Title>
 				<ImgWrap>
-					<IMG src={`/src/images/vehicle${itemData.image}.png`} />
+					<IMG src={`/assets/images/vehicle${itemData.image}.png`} />
 				</ImgWrap>
 				<ContentWrap>
 					<ContentBox>

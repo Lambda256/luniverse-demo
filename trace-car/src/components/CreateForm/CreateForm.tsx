@@ -128,7 +128,7 @@ const InputForm: React.FC<InputFormType.InputForm> = () => {
 			<FormWrap>
 				<Title>Create your item</Title>
 				<ImgWrap>
-					<IMG src={`/src/images/vehicle${randomNumber}.png`} />
+					<IMG src={`/assets/images/vehicle${randomNumber}.png`} />
 				</ImgWrap>
 				<Form id="input-form" onKeyDown={handleOnEnter}>
 					<InputBox>
