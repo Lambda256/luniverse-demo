@@ -1,14 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { selector } from "recoil";
 import Config from "../utils/config";
-
-import { authTokenAsyncState } from "./authTokenState";
 import { Keys } from "./keys";
 
 export const defaultItemsAsyncState = selector({
   key: Keys.DEFAULT_ITEMS_ASYNC,
   get: async ({get}) => {
-    get(authTokenAsyncState)
     try {
       const authToken = Config.AUTH_TOKEN
 
