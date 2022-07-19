@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, BgImg, Content, BgWrap, P, H1, BtnWrap, Btn, Icon, HoverIcon, TextWrap } from "./styled";
-import VehicleIMG from "/src/images/main-image.png";
+import VehicleIMG from "/assets/images/main-image.png";
 
 const HeroSection = () => {
   const [isBtnHover, setIsBtnHover] = useState(false);

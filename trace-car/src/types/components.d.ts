@@ -67,6 +67,7 @@ declare global {
   
   }
   interface ItemData {
+    eventId?: string;
     id: string;
     image: number;
     owner: string;
@@ -75,5 +76,6 @@ declare global {
     year: number;
     mileage: number;
     description?: string;
+    txHash?: string;
   }
 }

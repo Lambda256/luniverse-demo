@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { selector } from "recoil";
-import Config from "../ts/config";
+import Config from "../utils/config";
 import { apiKeysState } from "./apiKeysState";
 import { Keys } from "./keys";
 

@@ -18,6 +18,7 @@ const MyItem = () => {
 	const itemsData: ItemData[] = !items
 		? []
 		: items.map((item: EventsResponseItem) => JSON.parse(item.data));
+	
 
 	const handleOnClickItem = (item: ItemData) => {
 		navigate(`/items/${item.id}`);
@@ -33,7 +34,7 @@ const MyItem = () => {
 							<ItemH1>{item.plateNumber}</ItemH1>
 							<ItemH3>{item.model}</ItemH3>
 							<ItemH3>{item.year}</ItemH3>
-							<ItemImg src={`/src/images/vehicle${item.image}.png`} />
+							<ItemImg src={`/assets/images/vehicle${item.image}.png`} />
 						</ItemWrap>
 					))}
 				</Content>

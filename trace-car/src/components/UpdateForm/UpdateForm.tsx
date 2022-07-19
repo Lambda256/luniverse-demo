@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
 	useRecoilState,
 	useRecoilValue,
@@ -10,12 +10,12 @@ import {
 	historyAsyncState,
 	historyRefresher,
 } from "../../states/itemHistoryState";
-import { selectedItemState } from "../../states/selectedItemState";
+import { selectedItemAsyncState } from "../../states/selectedItemState";
 import {
 	addUserItemAsyncState,
 	addUserItemDataState,
 } from "../../states/userItemsState";
-import Config from "../../ts/config";
+import Config from "../../utils/config";
 import {
 	Btn,
 	BtnWrap,
@@ -31,27 +31,31 @@ import {
 } from "./styled";
 
 const UpdateForm = () => {
-	const selectedItem = useRecoilValue(selectedItemState);
+	const { eventId } = useParams();
+	const selectedItem = useRecoilValue(selectedItemAsyncState({ eventId }));
+	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
+	const recentItemData = JSON.parse(itemsHistory[itemsHistory.length - 1].data)
+	const [itemData, setItemData] = useState(recentItemData || selectedItem);
 	const navigate = useNavigate();
-	const setItemData = useSetRecoilState(addUserItemDataState);
-	const resetItemData = useResetRecoilState(addUserItemDataState);
+	const setAddUserItemData = useSetRecoilState(addUserItemDataState);
+	const resetAddUserItemData = useResetRecoilState(addUserItemDataState);
 	const [inputData, setInputData] = useState({
-		id: selectedItem.id,
-		image: selectedItem.image,
+		id: itemData.id,
+		image: itemData.image,
 		owner: Config.USER_NAME,
-		plateNumber: selectedItem.plateNumber,
-		model: selectedItem.model,
+		plateNumber: itemData.plateNumber,
+		model: itemData.model,
 		year: 2022,
-		mileage: selectedItem.mileage,
-		description: "",
+		mileage: itemData.mileage,
+		description: itemData.description,
 	});
 	useRecoilValue(addUserItemAsyncState);
-	useRecoilValue(historyAsyncState);
+	useRecoilValue(historyAsyncState(eventId));
 	const [refresher, setRefresher] = useRecoilState(historyRefresher); // Refreshing user items
 
 	useEffect(() => {
 		return () => {
-			resetItemData();
+			resetAddUserItemData();
 		};
 	}, []);
 
@@ -65,10 +69,10 @@ const UpdateForm = () => {
 			inputForm.reportValidity();
 			return;
 		}
-		setItemData(inputData as ItemData);
+		setAddUserItemData(inputData as ItemData);
 		setRefresher(refresher + 1);
-		navigate("../", { replace: true });
-	}
+		navigate(`/items/${eventId}`, { replace: true });
+	};
 
 	const handleOnClickSubmit = (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -131,15 +135,16 @@ const UpdateForm = () => {
 			<FormWrap>
 				<Title>Add more informations</Title>
 				<ImgWrap>
-					<IMG src={`/src/images/vehicle${selectedItem.image}.png`} />
+					<IMG src={`/assets/images/vehicle${itemData.image}.png`} />
 				</ImgWrap>
 				<Form id="input-form" onKeyDown={handleOnEnter}>
 					<InputBox>
-						<InputLabel htmlFor="owner" required>Owner</InputLabel>
+						<InputLabel htmlFor="owner" required>
+							Owner
+						</InputLabel>
 						<Input
 							id="owner"
 							required
-							placeholder="William"
 							textTransform="uppercase"
 							defaultValue={Config.USER_NAME}
 							onChange={handleOwnerOnChange}
@@ -153,9 +158,8 @@ const UpdateForm = () => {
 						<Input
 							id="plate"
 							required
-							placeholder="NY737ZN"
 							textTransform="uppercase"
-							defaultValue={selectedItem.plateNumber}
+							defaultValue={itemData.plateNumber}
 							onChange={handlePlateOnChange}
 						/>
 					</InputBox>
@@ -165,10 +169,9 @@ const UpdateForm = () => {
 						<Input
 							id="model"
 							required
-							placeholder="Aslan"
 							textTransform="uppercase"
 							readOnly={true}
-							defaultValue={selectedItem.model}
+							defaultValue={itemData.model}
 							onChange={handleModelOnChange}
 						/>
 					</InputBox>
@@ -182,9 +185,8 @@ const UpdateForm = () => {
 							max="2099"
 							step="1"
 							required
-							placeholder={`${new Date().getFullYear()}`}
 							readOnly={true}
-							defaultValue={selectedItem.year}
+							defaultValue={itemData.year}
 							onChange={handleYearOnChange}
 						/>
 					</InputBox>
@@ -196,10 +198,9 @@ const UpdateForm = () => {
 						<Input
 							id="mileage"
 							type="number"
-							min={0}
+							min={itemData.mileage}
 							required
-							placeholder="0"
-							defaultValue={selectedItem.mileage}
+							defaultValue={itemData.mileage}
 							onChange={handleMileageOnChange}
 						/>
 					</InputBox>
@@ -209,10 +210,9 @@ const UpdateForm = () => {
 						<Input
 							id="id"
 							type="text"
-							placeholder="Tell us more details"
 							readOnly
 							textTransform="uppercase"
-							value={selectedItem.id}
+							value={itemData.id}
 						/>
 					</InputBox>
 					{/* Input6 end */}
@@ -221,8 +221,7 @@ const UpdateForm = () => {
 						<Input
 							id="description"
 							type="text"
-							placeholder="Tell us more details"
-							defaultValue={selectedItem.description}
+							defaultValue={itemData.description}
 							onChange={handleDescriptionOnChange}
 						/>
 					</InputBox>

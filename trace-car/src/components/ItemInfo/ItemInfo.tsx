@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { historyAsyncState } from "../../states/itemHistoryState";
-import { selectedItemState } from "../../states/selectedItemState";
+import { selectedItemAsyncState } from "../../states/selectedItemState";
 import {
 	Btn,
 	BtnWrap,
@@ -20,20 +20,18 @@ import {
 } from "./styled";
 
 const ItemInfo = () => {
-	const itemsHistroy = useRecoilValue(historyAsyncState);
-	const selectedItem = useRecoilValue(selectedItemState);
-	const [itemData, setItemData] = useState(selectedItem);
-	
-	useEffect(() => {
-		if(itemsHistroy.length > 0) setItemData(JSON.parse(itemsHistroy[itemsHistroy.length-1].data) as ItemData)
-	}, [itemsHistroy])
-	
+	const { eventId } = useParams();
+	const selectedItem = useRecoilValue(selectedItemAsyncState({ eventId }));
+	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
+	const recentItemData = JSON.parse(itemsHistory[itemsHistory.length - 1].data)
+	const [itemData, setItemData] = useState(recentItemData || selectedItem);
+
 	return (
 		<Container>
 			<InfoWrap>
 				<Title> Item Info </Title>
 				<ImgWrap>
-					<IMG src={`/src/images/vehicle${itemData.image}.png`} />
+					<IMG src={`/assets/images/vehicle${itemData.image}.png`} />
 				</ImgWrap>
 				<ContentWrap>
 					<ContentBox>
@@ -69,7 +67,9 @@ const ItemInfo = () => {
 					{/* Span5 end */}
 					<ContentBox>
 						<Label htmlFor="id">VIN</Label>
-						<Span id="id" textTransform="uppercase">{itemData.id}</Span>
+						<Span id="id" textTransform="uppercase">
+							{itemData.id}
+						</Span>
 					</ContentBox>
 					{/* Span6 end */}
 					<ContentBox>
@@ -79,7 +79,7 @@ const ItemInfo = () => {
 					{/* Span7 end */}
 				</ContentWrap>
 				<BtnWrap>
-					<Btn to={`/items/${itemData.id}/update`} state={itemData}>
+					<Btn to={`/items/${eventId}/update`} state={itemData}>
 						Update
 					</Btn>
 				</BtnWrap>
