@@ -11,7 +11,7 @@ import {
 	createUserItemDataState,
 	userItemsRefresher,
 } from "../../states/userItemsState";
-import Config from "../../ts/config";
+import Config from "../../utils/config";
 import {
 	Btn,
 	BtnWrap,

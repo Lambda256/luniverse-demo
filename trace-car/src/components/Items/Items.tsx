@@ -9,33 +9,27 @@ import {
 	ItemWrap,
 } from "./styled";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { defaultItemsAsyncState } from "../../states/defaultItemsState";
 import { userItemsAsyncState, userItemsRefresher } from "../../states/userItemsState";
-import { selectedItemState } from "../../states/selectedItemState";
 
 const Items = () => {
 	const defaultItems = useRecoilValue(defaultItemsAsyncState);
 	const userItems = useRecoilValue(userItemsAsyncState);
 	const reverseUserItmes = [...userItems].reverse();
 	const items = [...reverseUserItmes, ...defaultItems];
-	const setSelectedItem = useSetRecoilState(selectedItemState);
 	const [refresher, setRefresher] = useRecoilState(userItemsRefresher);
-
+	
 	useEffect(() => {
 		setRefresher(refresher + 1)
 	}, [])
-
-	const itemsData = items
-		.map((item) => {
-			try {
-				const data = JSON.parse(item.data);
-				return data;
-			} catch (error) {
-				return false;
-			}
-		})
-		.filter((data) => data !== false);
+	const itemsData: ItemData[] = !items
+		? []
+		: items.map((item: EventsResponseItem) => {
+			const data = JSON.parse(item.data)
+			const txHash = JSON.parse(item.tx.receipt)?.txHash
+			return {...data, txHash, eventId: item.eventId}
+		});
 
 	let navigate = useNavigate();
 
@@ -44,8 +38,7 @@ const Items = () => {
 	};
 
 	const handleOnClickItem = (item: ItemData) => {
-		setSelectedItem(item);
-		navigate(`/items/${item.id}`);
+		navigate(`/items/${item.eventId}`);
 	};
 
 	return (

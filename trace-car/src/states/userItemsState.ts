@@ -1,6 +1,6 @@
 import axios from "axios"
 import { atom, selector } from "recoil"
-import Config from "../ts/config"
+import Config from "../utils/config"
 import { Keys } from "./keys"
 
 export const userItemsRefresher = atom({

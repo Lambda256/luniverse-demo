@@ -5,7 +5,7 @@ import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
 import "/src/styles/index.css";
-import * as theme from "./ts/theme";
+import * as theme from "./utils/theme";
 import {ConfigEnv} from "vite"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { historyAsyncState } from "../../states/itemHistoryState";
-import {
-	selectedItemRecentHistoryState,
-	selectedItemState,
-} from "../../states/selectedItemState";
+import { selectedItemAsyncState } from "../../states/selectedItemState";
 import {
 	Box,
 	Card,
@@ -17,13 +15,14 @@ import {
 	CreatedText,
 	Time,
 	CreatedCard,
-	CreatedAt,
+	ScanLink,
 } from "./styled";
 
 const History = () => {
-	const historyData: EventsResponseItem[] = useRecoilValue(historyAsyncState);
+	const { eventId } = useParams();
+	const selectedItem = useRecoilValue(selectedItemAsyncState({eventId}));
+	const historyData: EventsResponseItem[] = useRecoilValue(historyAsyncState(selectedItem.id));
 	const reorderHistoryData = [...historyData].reverse();
-	const selectedItem = useRecoilValue(selectedItemState);
 
 	useEffect(() => {
 		const contents = document.querySelectorAll(".content");
@@ -48,11 +47,16 @@ const History = () => {
 		return `${yyyymmss} ${hh}:${mmss}`;
 	};
 
+	if(reorderHistoryData.length === 0) return <>Empty!</>
+	else
 	return (
 		<Container>
 			<Cards>
 				{reorderHistoryData.map((item, index) => {
 					const itemData: ItemData = JSON.parse(item.data);
+					let txHash =""
+					if(item.tx.status === "EXECUTED") txHash = JSON.parse(item.tx.receipt).txHash;
+
 					return (
 						<Card key={index}>
 							<Time>{formattingTime(item.timestamp)}</Time>
@@ -73,6 +77,12 @@ const History = () => {
 									<H1>Description</H1>
 									<Description>{itemData.description}</Description>
 								</Box>
+								<ScanLink
+									href={`https://sidescan.luniverse.io/chains/2251976252273339850/transactions/${txHash}`}
+									target="_blank"
+								>
+									Scan Link
+								</ScanLink>
 							</CardContent>
 						</Card>
 					);
@@ -85,7 +95,6 @@ const History = () => {
 				</CreatedText>
 			</CreatedIcon>
 			<CreatedCard className="content">
-				{/* <CreatedAt></CreatedAt> */}
 				<Box>
 					<H1>Owner</H1>
 					<Description>{selectedItem.owner}</Description>

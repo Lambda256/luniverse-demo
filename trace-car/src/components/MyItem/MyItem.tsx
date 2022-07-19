@@ -18,6 +18,7 @@ const MyItem = () => {
 	const itemsData: ItemData[] = !items
 		? []
 		: items.map((item: EventsResponseItem) => JSON.parse(item.data));
+	
 
 	const handleOnClickItem = (item: ItemData) => {
 		navigate(`/items/${item.id}`);

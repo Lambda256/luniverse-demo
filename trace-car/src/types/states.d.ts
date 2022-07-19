@@ -25,18 +25,33 @@ declare global {
     };
   }
 
+  /* Type of Transaction */
+  interface Tx {
+    fromAddress: string,
+    inputs: string,
+    receipt: string,
+    result: number,
+    status: string,
+    txId: string,
+  }
+
   /* Type of item from events response */
   interface EventsResponseItem {
     eventId: string,
     objectId: string,
     traceProgramId: string, 
     eventTxId: string,
-    tx: object,
+    tx: Tx,
     timestamp: number,
     userName: string,
     eventName: string,
     data: string,
     createdBy: object,
     createdAt: string,
+  }
+
+  /* Type of object with attributes */
+  interface Params {
+    [key: string]: any
   }
 }

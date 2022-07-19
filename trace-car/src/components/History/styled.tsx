@@ -169,3 +169,7 @@ export const CreatedAt = styled.time`
 	position: absolute;
 	top: 0;
 `;
+
+export const ScanLink = styled.a`
+	
+`;

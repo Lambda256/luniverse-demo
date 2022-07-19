@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { atom, selector } from "recoil";
-import Config from "../ts/config";
+import { selector } from "recoil";
+import Config from "../utils/config";
 
 import { authTokenAsyncState } from "./authTokenState";
 import { Keys } from "./keys";
@@ -21,7 +21,6 @@ export const defaultItemsAsyncState = selector({
           eventName: Config.CREATE,
           userName: Config.DEFAULT_ITEMS_USER_NAME,
           objectId: Config.DEFAULT_ITEMS_OBJECT_ID,
-          timestamp: Date.now()/1000,
         },
       });
 
