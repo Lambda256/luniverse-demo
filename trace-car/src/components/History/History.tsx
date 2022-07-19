@@ -21,6 +21,7 @@ import {
 const History = () => {
 	const { eventId } = useParams();
 	const selectedItem = useRecoilValue(selectedItemAsyncState({eventId}));
+	console.log(selectedItem)
 	const historyData: EventsResponseItem[] = useRecoilValue(historyAsyncState(selectedItem.id));
 	const reorderHistoryData = [...historyData].reverse();
 
@@ -47,8 +48,6 @@ const History = () => {
 		return `${yyyymmss} ${hh}:${mmss}`;
 	};
 
-	if(reorderHistoryData.length === 0) return <>Empty!</>
-	else
 	return (
 		<Container>
 			<Cards>
@@ -123,6 +122,12 @@ const History = () => {
 					<H1>Description</H1>
 					<Description>{selectedItem.description}</Description>
 				</Box>
+				<ScanLink
+					href={`https://sidescan.luniverse.io/chains/2251976252273339850/transactions/${selectedItem.txHash}`}
+					target="_blank"
+				>
+					Scan Link
+				</ScanLink>
 			</CreatedCard>
 		</Container>
 	);

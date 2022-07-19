@@ -23,8 +23,11 @@ const ItemInfo = () => {
 	const { eventId } = useParams();
 	const selectedItem = useRecoilValue(selectedItemAsyncState({ eventId }));
 	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
-	const recentItemData = JSON.parse(itemsHistory[itemsHistory.length - 1].data)
-	const [itemData, setItemData] = useState(recentItemData || selectedItem);
+	const [itemData, setItemData] = useState(selectedItem);
+
+	useEffect(() => {
+		if(itemsHistory.length > 0) setItemData(JSON.parse(itemsHistory[itemsHistory.length-1].data) as ItemData)
+	}, [itemsHistory])
 
 	return (
 		<Container>
