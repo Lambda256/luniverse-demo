@@ -17,7 +17,9 @@ export const selectedItemAsyncState = selectorFamily<ItemData, Params>({
 					method: "get",
 					headers: { Authorization: `Bearer ${authToken}` },
 				});
-				return JSON.parse(response.data.data.event.data);
+				const txHash = JSON.parse(response.data.data.event.tx.receipt).txHash;
+				const itemData = JSON.parse(response.data.data.event.data)
+				return {...itemData, txHash};
 			} catch (error) {
 				throw error;
 			}

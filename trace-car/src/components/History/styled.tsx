@@ -123,6 +123,7 @@ export const CreatedIcon = styled.div`
 	background: ${({ theme }) => theme.color.bg};
 	border-radius: 50%;
 	box-shadow: ${({ theme }) => theme.boxShadow.style1};
+	z-index: 1;
 `;
 
 export const CreatedText = styled.div`
@@ -152,7 +153,7 @@ export const CreatedCard = styled.div`
 	box-shadow: ${({ theme }) => theme.boxShadow.style1};
 	border-radius: 1rem;
 	transition: all 0.5s ease-in-out;
-	z-index: -1;
+	z-index: 0;
 	opacity: 0;
 
 	&>div:last-child {
