@@ -15,8 +15,8 @@ declare global {
       token: string;
       expiryAt: string;
     }
-    
   }
+  
   /* Type of generating AuthToken response */
   interface GenerateAuthTokenResponse {
     code: string;
