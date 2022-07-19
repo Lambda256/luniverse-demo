@@ -11,7 +11,7 @@ const Config = {
   ADD : "Add",
   
   // DEFAULT SETTINGS
-  DEFAULT_ITEMS_USER_NAME : "test2",
+  DEFAULT_ITEMS_USER_NAME : "trace_demo",
   DEFAULT_ITEMS_OBJECT_ID : "Trace_demo_default_items",
   
   // USER DEFAULT SETTINGS

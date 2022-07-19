@@ -21,7 +21,6 @@ import {
 const History = () => {
 	const { eventId } = useParams();
 	const selectedItem = useRecoilValue(selectedItemAsyncState({eventId}));
-	console.log(selectedItem)
 	const historyData: EventsResponseItem[] = useRecoilValue(historyAsyncState(selectedItem.id));
 	const reorderHistoryData = [...historyData].reverse();
 
