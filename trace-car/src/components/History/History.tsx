@@ -48,8 +48,6 @@ const History = () => {
 		return `${yyyymmss} ${hh}:${mmss}`;
 	};
 
-	if(reorderHistoryData.length === 0) return <>Empty!</>
-	else
 	return (
 		<Container>
 			<Cards>

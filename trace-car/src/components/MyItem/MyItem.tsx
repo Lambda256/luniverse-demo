@@ -17,11 +17,16 @@ const MyItem = () => {
 	const items: EventsResponseItem[] = useRecoilValue(userItemsAsyncState);
 	const itemsData: ItemData[] = !items
 		? []
-		: items.map((item: EventsResponseItem) => JSON.parse(item.data));
+		: items.map((item: EventsResponseItem) => {
+			const data = JSON.parse(item.data)
+			const txHash = JSON.parse(item.tx.receipt).txHash
+			const eventId = item.eventId
+			return {...data, eventId, txHash}
+		});
 	
 
 	const handleOnClickItem = (item: ItemData) => {
-		navigate(`/items/${item.id}`);
+		navigate(`/items/${item.eventId}`);
 	};
 
 	return (
