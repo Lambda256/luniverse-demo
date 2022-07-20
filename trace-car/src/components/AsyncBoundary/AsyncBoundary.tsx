@@ -15,6 +15,10 @@ type AsyncBoundaryProps = ExceptFallbackErrorBoundaryAttributes & {
 	SuspenseFallback: SuspenseProps["fallback"];
 };
 
+/**
+ * This componnet is for handling async request
+ */
+
 function AsyncBoundary({
 	children,
 	ErrorFallback,

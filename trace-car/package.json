@@ -1,8 +1,11 @@
 {
-  "homepage": "https://imysh578.github.io/Luniverse-demo-trace/",
   "name": "luniverse-demo-trace",
   "private": true,
   "version": "0.0.0",
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
