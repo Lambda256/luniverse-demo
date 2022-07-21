@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { historyAsyncState } from "../../states/itemHistoryState";
-import { selectedItemAsyncState } from "../../states/selectedItemState";
+import { selectedItemAsyncState, selectedItemsRefresher } from "../../states/selectedItemState";
 import {
 	Btn,
 	BtnWrap,
@@ -24,6 +24,11 @@ const ItemInfo = () => {
 	const selectedItem = useRecoilValue(selectedItemAsyncState({ eventId }));
 	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
 	const [itemData, setItemData] = useState(selectedItem);
+	const [refresher, setRefresher] = useRecoilState(selectedItemsRefresher)
+
+	useEffect(() => {
+		setRefresher(refresher + 1)
+	}, [])
 
 	useEffect(() => {
 		if(itemsHistory.length > 0) setItemData(JSON.parse(itemsHistory[itemsHistory.length-1].data) as ItemData)

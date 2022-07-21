@@ -34,8 +34,7 @@ const UpdateForm = () => {
 	const { eventId } = useParams();
 	const selectedItem = useRecoilValue(selectedItemAsyncState({ eventId }));
 	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
-	const recentItemData = JSON.parse(itemsHistory[itemsHistory.length - 1].data)
-	const [itemData, setItemData] = useState(recentItemData || selectedItem);
+	const [itemData, setItemData] = useState(selectedItem);
 	const navigate = useNavigate();
 	const setAddUserItemData = useSetRecoilState(addUserItemDataState);
 	const resetAddUserItemData = useResetRecoilState(addUserItemDataState);
@@ -52,6 +51,15 @@ const UpdateForm = () => {
 	useRecoilValue(addUserItemAsyncState);
 	useRecoilValue(historyAsyncState(eventId));
 	const [refresher, setRefresher] = useRecoilState(historyRefresher); // Refreshing user items
+
+	useEffect(() => {
+		if (itemsHistory.length > 0) {
+			setItemData(
+				JSON.parse(itemsHistory[itemsHistory.length - 1].data) as ItemData
+			);
+			console.log(JSON.parse(itemsHistory[itemsHistory.length - 1].data))
+		}
+	}, [itemsHistory]);
 
 	useEffect(() => {
 		return () => {

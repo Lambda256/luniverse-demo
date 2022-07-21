@@ -54,6 +54,7 @@ export const ItemWrap = styled.div`
 `;
 
 export const ItemH1 = styled.h1`
+  text-transform: uppercase;
   font-weight: ${({theme}) => theme.fontWeight.semiBold};
   font-size: 2rem;
   @media ${({theme}) => theme.breakpoint.sm} {
