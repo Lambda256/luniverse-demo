@@ -52,8 +52,7 @@ const History = () => {
 			<Cards>
 				{reorderHistoryData.map((item, index) => {
 					const itemData: ItemData = JSON.parse(item.data);
-					let txHash =""
-					if(item.tx.status === "EXECUTED") txHash = JSON.parse(item.tx.receipt).txHash;
+					let txHash = JSON.parse(item.tx?.receipt)?.txHash || "";
 
 					return (
 						<Card key={index}>
