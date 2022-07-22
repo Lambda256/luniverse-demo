@@ -24,7 +24,6 @@ export const userItemsAsyncState = selector({
           eventName: Config.CREATE,
           userName: Config.USER_NAME,
           objectId: Config.USER_ITEMS_OBJECT_ID,
-          timestamp: Date.now()/1000,
         },
       });
 
