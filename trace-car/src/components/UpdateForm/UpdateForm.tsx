@@ -12,8 +12,8 @@ import {
 } from "../../states/itemHistoryState";
 import { selectedItemAsyncState } from "../../states/selectedItemState";
 import {
-	addUserItemAsyncState,
-	addUserItemDataState,
+	updateUserItemAsyncState,
+	updateUserItemDataState,
 } from "../../states/userItemsState";
 import Config from "../../utils/config";
 import {
@@ -36,8 +36,8 @@ const UpdateForm = () => {
 	const itemsHistory = useRecoilValue(historyAsyncState(selectedItem.id));
 	const [itemData, setItemData] = useState(selectedItem);
 	const navigate = useNavigate();
-	const setAddUserItemData = useSetRecoilState(addUserItemDataState);
-	const resetAddUserItemData = useResetRecoilState(addUserItemDataState);
+	const setAddUserItemData = useSetRecoilState(updateUserItemDataState);
+	const resetAddUserItemData = useResetRecoilState(updateUserItemDataState);
 	const [inputData, setInputData] = useState({
 		id: itemData.id,
 		image: itemData.image,
@@ -48,18 +48,13 @@ const UpdateForm = () => {
 		mileage: itemData.mileage,
 		description: itemData.description,
 	});
-	useRecoilValue(addUserItemAsyncState);
+	useRecoilValue(updateUserItemAsyncState);
 	useRecoilValue(historyAsyncState(eventId));
 	const [refresher, setRefresher] = useRecoilState(historyRefresher); // Refreshing user items
 
 	useEffect(() => {
-		if (itemsHistory.length > 0) {
-			setItemData(
-				JSON.parse(itemsHistory[itemsHistory.length - 1].data) as ItemData
-			);
-			console.log(JSON.parse(itemsHistory[itemsHistory.length - 1].data))
-		}
-	}, [itemsHistory]);
+		if(itemsHistory.length > 0) setItemData(JSON.parse(itemsHistory[itemsHistory.length-1].data) as ItemData)
+	}, [itemsHistory])
 
 	useEffect(() => {
 		return () => {
@@ -155,6 +150,7 @@ const UpdateForm = () => {
 							required
 							textTransform="uppercase"
 							defaultValue={Config.USER_NAME}
+							key={Config.USER_NAME}
 							onChange={handleOwnerOnChange}
 						/>
 					</InputBox>
@@ -168,6 +164,7 @@ const UpdateForm = () => {
 							required
 							textTransform="uppercase"
 							defaultValue={itemData.plateNumber}
+							key={itemData.plateNumber}
 							onChange={handlePlateOnChange}
 						/>
 					</InputBox>
@@ -180,6 +177,7 @@ const UpdateForm = () => {
 							textTransform="uppercase"
 							readOnly={true}
 							defaultValue={itemData.model}
+							key={itemData.model}
 							onChange={handleModelOnChange}
 						/>
 					</InputBox>
@@ -195,6 +193,7 @@ const UpdateForm = () => {
 							required
 							readOnly={true}
 							defaultValue={itemData.year}
+							key={itemData.year}
 							onChange={handleYearOnChange}
 						/>
 					</InputBox>
@@ -209,6 +208,7 @@ const UpdateForm = () => {
 							min={itemData.mileage}
 							required
 							defaultValue={itemData.mileage}
+							key={itemData.mileage}
 							onChange={handleMileageOnChange}
 						/>
 					</InputBox>
@@ -230,6 +230,7 @@ const UpdateForm = () => {
 							id="description"
 							type="text"
 							defaultValue={itemData.description}
+							key={itemData.description}
 							onChange={handleDescriptionOnChange}
 						/>
 					</InputBox>

@@ -16,7 +16,7 @@ namespace Config {
   
   // USER DEFAULT SETTINGS
   export const USER_NAME = import.meta.env.VITE_USER_NAME
-  export const USER_ITEMS_OBJECT_ID = "Trace_demo_user_items"
+  export const USER_ITEMS_OBJECT_ID = "Trace_demo_test2"
 }
 
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import { atom, selectorFamily } from "recoil";
 import Config from "../utils/config";
 import { Keys } from "./keys";
-import { addUserItemAsyncState } from "./userItemsState";
+import { updateUserItemAsyncState } from "./userItemsState";
 
 export const historyRefresher = atom({
 	key: Keys.HISTORY_REFRESHER,
@@ -20,7 +20,7 @@ export const historyAsyncState = selectorFamily({
 		try {
 			const authToken = Config.AUTH_TOKEN;
 			get(historyRefresher);
-			get(addUserItemAsyncState);
+			get(updateUserItemAsyncState);
 
 			const response = await axios.request({
 				baseURL: Config.BASE_URL,

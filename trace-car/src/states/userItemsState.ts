@@ -67,15 +67,15 @@ export const createUserItemAsyncState = selector({
   },
 })
 
-export const addUserItemDataState = atom<ItemData | null>({
-  key: Keys.ADD_USER_ITEM_DATA,
+export const updateUserItemDataState = atom<ItemData | null>({
+  key: Keys.UPDATE_USER_ITEM_DATA,
   default: null,
 })
 
-export const addUserItemAsyncState = selector({
-  key: Keys.ADD_USER_ITEM_ASYNC,
+export const updateUserItemAsyncState = selector({
+  key: Keys.UPDATE_USER_ITEM_ASYNC,
   get: async ({get}) => {
-    const bodyData = get(addUserItemDataState)
+    const bodyData = get(updateUserItemDataState)
     if (!bodyData) return "empty"
     const authToken = Config.AUTH_TOKEN
     try {
