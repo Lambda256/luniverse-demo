@@ -8,7 +8,7 @@ namespace Config {
   
   // EVENT NAMES
   export const CREATE = "Create"
-  export const ADD = "Add"
+  export const UPDATE = "Update"
   
   // DEFAULT SETTINGS
   export const DEFAULT_ITEMS_USER_NAME = "trace_demo"

@@ -85,7 +85,7 @@ export const updateUserItemAsyncState = selector({
         method: "post",
         headers: {Authorization: `Bearer ${authToken}`},
         data: {
-          eventName: Config.ADD,
+          eventName: Config.UPDATE,
           userName: Config.USER_NAME,
           objectId: Config.USER_ITEMS_OBJECT_ID,
           timestamp: Date.now()/1000,

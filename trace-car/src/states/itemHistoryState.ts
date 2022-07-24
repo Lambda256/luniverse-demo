@@ -9,11 +9,6 @@ export const historyRefresher = atom({
 	default: 0,
 });
 
-export const historyState = atom<ItemData | null>({
-	key: Keys.HISTORY_DATA,
-	default: null,
-});
-
 export const historyAsyncState = selectorFamily({
 	key: Keys.HISTORY_DATA_ASYNC,
 	get: (id) => async ({ get }) => {
@@ -21,16 +16,17 @@ export const historyAsyncState = selectorFamily({
 			const authToken = Config.AUTH_TOKEN;
 			get(historyRefresher);
 			get(updateUserItemAsyncState);
-
+			
 			const response = await axios.request({
 				baseURL: Config.BASE_URL,
 				url: Config.EVENTS_URL,
 				method: "get",
 				headers: { Authorization: `Bearer ${authToken}` },
 				params: {
-					eventName: Config.ADD,
+					eventName: Config.UPDATE,
 					userName: Config.USER_NAME,
 					objectId: Config.USER_ITEMS_OBJECT_ID,
+					rpp: 100,
 				},
 			});
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { historyAsyncState } from "../../states/itemHistoryState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { historyAsyncState, historyRefresher } from "../../states/itemHistoryState";
 import { selectedItemAsyncState } from "../../states/selectedItemState";
 import {
 	Box,
@@ -23,6 +23,11 @@ const History = () => {
 	const selectedItem = useRecoilValue(selectedItemAsyncState({eventId}));
 	const historyData: EventsResponseItem[] = useRecoilValue(historyAsyncState(selectedItem.id));
 	const reorderHistoryData = [...historyData].reverse();
+	const [refresher, setRefresher] = useRecoilState(historyRefresher)
+
+	useEffect(() => {
+		setRefresher(refresher + 1)
+	}, [])
 
 	useEffect(() => {
 		const contents = document.querySelectorAll(".content");

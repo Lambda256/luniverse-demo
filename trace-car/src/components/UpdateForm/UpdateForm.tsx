@@ -38,22 +38,17 @@ const UpdateForm = () => {
 	const navigate = useNavigate();
 	const setAddUserItemData = useSetRecoilState(updateUserItemDataState);
 	const resetAddUserItemData = useResetRecoilState(updateUserItemDataState);
-	const [inputData, setInputData] = useState({
-		id: itemData.id,
-		image: itemData.image,
-		owner: Config.USER_NAME,
-		plateNumber: itemData.plateNumber,
-		model: itemData.model,
-		year: 2022,
-		mileage: itemData.mileage,
-		description: itemData.description,
-	});
+	const [inputData, setInputData] = useState(itemData);
 	useRecoilValue(updateUserItemAsyncState);
 	useRecoilValue(historyAsyncState(eventId));
 	const [refresher, setRefresher] = useRecoilState(historyRefresher); // Refreshing user items
 
 	useEffect(() => {
-		if(itemsHistory.length > 0) setItemData(JSON.parse(itemsHistory[itemsHistory.length-1].data) as ItemData)
+		if(itemsHistory.length > 0) {
+			const item = JSON.parse(itemsHistory[itemsHistory.length-1].data) as ItemData
+			setItemData(item)
+			setInputData(item)
+		}
 	}, [itemsHistory])
 
 	useEffect(() => {
@@ -74,7 +69,7 @@ const UpdateForm = () => {
 		}
 		setAddUserItemData(inputData as ItemData);
 		setRefresher(refresher + 1);
-		navigate(`/items/${eventId}`, { replace: true });
+		navigate(`/items/${eventId}`, { replace: true});
 	};
 
 	const handleOnClickSubmit = (e: React.MouseEvent) => {
